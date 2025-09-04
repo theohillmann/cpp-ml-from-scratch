@@ -58,7 +58,7 @@ public:
         throw out_of_range("List out of range");
     }
 
-    void display_foward() {
+    void display_forward() {
         Node* temp = head;
         while (temp){
             cout << temp->value << "->";
@@ -85,12 +85,16 @@ int main() {
     list.insert_front(10);
     list.insert_front(20);
     list.insert_back(30);
-    list.display_foward();
+    list.display_forward();
     list.display_backward();
-    cout << list.pop(0);
-    cout << list.pop(1);
-    cout << list.pop(0);
-    cout << list.pop(0);
+    try {
+        cout << list.pop(0);
+        cout << list.pop(1);
+        cout << list.pop(0);
+        cout << list.pop(0);
+    } catch (const out_of_range& e) {
+        cerr << "Exception caught: " << e.what() << endl;
+    }
     
     return 0;
 }
