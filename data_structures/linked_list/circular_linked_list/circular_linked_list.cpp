@@ -50,12 +50,14 @@ public:
 
 
     void display_forward(int cicle){
-        Node* temp = head;
-        int cicle_count = 0;
-        while (cicle_count < cicle){
+        for (int iterations; iterations < cicle; iterations++){
+            Node* temp = head;
+            int cicle_count = 0;
+            while (cicle_count < length){
             cout << temp->value<<"->";
             temp = temp->next;
             cicle_count ++;
+            }
         }
     }
 
@@ -67,7 +69,7 @@ int main(){
     list.insert_front(20);
     list.insert_front(10);
     list.insert_back(30);
-    list.display_forward(10);
+    list.display_forward(2);
 
     return 0;    
 
