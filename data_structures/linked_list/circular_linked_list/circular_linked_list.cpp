@@ -10,16 +10,21 @@ private:
     Node* tail;
     int length = 0;
 
+
+    void insert_empty_list(int value){
+        Node* new_node = new Node(value, tail, head);
+        head = tail = new_node;
+        head->next = tail;
+        tail->previous = head;
+    }
+
 public:
 
     CircularLinkedList(): head(nullptr), tail(nullptr) {}
 
     void insert_front(int value){
         if (length == 0){
-            Node* new_node = new Node(value, tail, head);
-            head = tail = new_node;
-            head->next = tail;
-            tail->previous = head;
+            insert_empty_list(value);
         }else{
             Node* new_node = new Node(value, head, tail);
             head->previous = new_node;
@@ -29,6 +34,19 @@ public:
         }
         length++;
     }
+
+    void insert_back(int value){
+        if (length == 0){
+            insert_empty_list(value);
+        }else{
+            Node* new_node = new Node(value, head, tail);
+            tail->next = new_node;
+            tail = new_node;
+        }
+
+        length++;
+    }
+    
 
 
     void display_forward(int cicle){
@@ -48,7 +66,8 @@ int main(){
     CircularLinkedList list;
     list.insert_front(20);
     list.insert_front(10);
-    list.display_forward(5);
+    list.insert_back(30);
+    list.display_forward(10);
 
     return 0;    
 
