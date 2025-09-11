@@ -69,8 +69,8 @@ public:
     }
 
 
-    void display_forward(int cicle){
-        for (int iterations; iterations < cicle; iterations++){
+    void display_forward(int cicles){
+        for (int iterations=0; iterations < cicles; iterations++){
             Node* temp = head;
             int cicle_count = 0;
             while (cicle_count < length){
@@ -79,21 +79,32 @@ public:
             cicle_count ++;
             }
         }
+        cout << endl;
     }
 
+    void display_backward(int cicles){
+        for (int interation=0; interation < cicles; interation++){
+            Node* temp_node = tail;
+            int cicle_count = 0;
+            while (cicle_count < length){
+                cout << temp_node->value << "->";
+                temp_node = temp_node->previous;
+                cicle_count++;
+            }
+        }
+        cout << endl;
+    }
 };
 
 int main(){
 
     CircularLinkedList list;
-    // list.insert_front(20);
-    // list.insert_front(10);
-    // list.insert_back(30);
     list.insert(20,0);
-    list.insert(10,1);
-    list.insert(30,1);
+    list.insert(10,0);
+    list.insert(30,2);
 
     list.display_forward(2);
+    list.display_backward(3);
 
     return 0;    
 
