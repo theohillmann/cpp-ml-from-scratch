@@ -42,6 +42,8 @@ public:
             Node* new_node = new Node(value, head, tail);
             tail->next = new_node;
             tail = new_node;
+            tail->next = head;
+            head->previous = tail;
             length++;
         }
     }
@@ -68,51 +70,51 @@ public:
         }
     }
 
-int pop(int position){
-    if (length == 0 || position >= length){
-        throw out_of_range("List out of range");
+    int pop(int position){
+        if (length == 0 || position >= length){
+            throw out_of_range("List out of range");
+        }
+        Node* temp_node = head;
+        for (int counter = 0; counter < position; counter++){
+            temp_node = temp_node->next;
+        }
+        int value = temp_node->value;
+        if (length == 1){
+            delete temp_node;
+            head = tail = nullptr;
+        } else {
+            temp_node->previous->next = temp_node->next;
+            temp_node->next->previous = temp_node->previous;
+            if (temp_node == head) head = temp_node->next;
+            if (temp_node == tail) tail = temp_node->previous;
+            delete temp_node;
+        }
+        length--;
+        return value;
     }
-    Node* temp_node = head;
-    for (int counter = 0; counter < position; counter++){
-        temp_node = temp_node->next;
-    }
-    int value = temp_node->value;
-    if (length == 1){
-        delete temp_node;
-        head = tail = nullptr;
-    } else {
-        temp_node->previous->next = temp_node->next;
-        temp_node->next->previous = temp_node->previous;
-        if (temp_node == head) head = temp_node->next;
-        if (temp_node == tail) tail = temp_node->previous;
-        delete temp_node;
-    }
-    length--;
-    return value;
-}
 
 
-    void display_forward(int cicles){
-        for (int iterations=0; iterations < cicles; iterations++){
+    void display_forward(int cycles){
+        for (int iterations=0; iterations < cycles; iterations++){
             Node* temp = head;
-            int cicle_count = 0;
-            while (cicle_count < length){
-            cout << temp->value<<"->";
+            int cycle_count = 0;
+            while (cycle_count < length){
+            cout << temp->value << "->";
             temp = temp->next;
-            cicle_count ++;
+            cycle_count++;
             }
         }
         cout << endl;
     }
 
-    void display_backward(int cicles){
-        for (int interation=0; interation < cicles; interation++){
+    void display_backward(int cycles){
+        for (int iteration=0; iteration < cycles; iteration++){
             Node* temp_node = tail;
-            int cicle_count = 0;
-            while (cicle_count < length){
+            int cycle_count = 0;
+            while (cycle_count < length){
                 cout << temp_node->value << "->";
                 temp_node = temp_node->previous;
-                cicle_count++;
+                cycle_count++;
             }
         }
         cout << endl;
@@ -127,10 +129,10 @@ int main(){
     list.insert(30,2);
     list.display_forward(2);
     list.display_backward(2);
-    cout<<list.pop(2)<<endl;
+    cout << list.pop(2)<<endl;
     list.display_forward(2);
     list.display_backward(2);
 
-    return 0;    
+    return 0;
 
 }
