@@ -68,6 +68,29 @@ public:
         }
     }
 
+int pop(int position){
+    if (length == 0 || position >= length){
+        throw out_of_range("List out of range");
+    }
+    Node* temp_node = head;
+    for (int counter = 0; counter < position; counter++){
+        temp_node = temp_node->next;
+    }
+    int value = temp_node->value;
+    if (length == 1){
+        delete temp_node;
+        head = tail = nullptr;
+    } else {
+        temp_node->previous->next = temp_node->next;
+        temp_node->next->previous = temp_node->previous;
+        if (temp_node == head) head = temp_node->next;
+        if (temp_node == tail) tail = temp_node->previous;
+        delete temp_node;
+    }
+    length--;
+    return value;
+}
+
 
     void display_forward(int cicles){
         for (int iterations=0; iterations < cicles; iterations++){
@@ -102,9 +125,11 @@ int main(){
     list.insert(20,0);
     list.insert(10,0);
     list.insert(30,2);
-
     list.display_forward(2);
-    list.display_backward(3);
+    list.display_backward(2);
+    cout<<list.pop(2)<<endl;
+    list.display_forward(2);
+    list.display_backward(2);
 
     return 0;    
 
